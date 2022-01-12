@@ -5,6 +5,11 @@ const verde = document.getElementById('verde')
 const btnEmpezar = document.getElementById('btnEmpezar')
 const overlay = document.getElementById('overlay')
 const ULTIMO_NIVEL = 10
+const sound_do = document.getElementById('sound_do')
+const sound_mi = document.getElementById('sound_mi')
+const sound_sol = document.getElementById('sound_sol')
+const sound_si = document.getElementById('sound_si')
+
 
 class Juego {
     constructor() {
@@ -24,6 +29,12 @@ class Juego {
             violeta,
             naranja,
             verde
+        }
+        this.sonidos = {
+            sound_do,
+            sound_mi,
+            sound_sol,
+            sound_si
         }
     }
 
@@ -72,6 +83,24 @@ class Juego {
         }
     }
     
+    generarSonido(nombreColor){
+        const numero = this.transformarColorANumero(nombreColor)
+        switch(numero){
+            case 0:
+                this.sonidos.sound_do.play()
+                break;
+            case 1:
+                this.sonidos.sound_mi.play()
+                break;
+            case 2:
+                this.sonidos.sound_sol.play()
+                break;
+            case 3:
+                this.sonidos.sound_si.play()
+                break;
+        }
+    }
+
     iluminarSecuencia() {
         for (let i = 0; i < this.nivel; i++) {
              let color = this.transformarNumeroAColor(this.secuencia[i])
@@ -80,6 +109,7 @@ class Juego {
     }
 
     iluminarColor (color) {
+        this.generarSonido(color)
         this.colores[color].classList.add('light')
         setTimeout(() => this.apagarColor(color), 500)
     }
